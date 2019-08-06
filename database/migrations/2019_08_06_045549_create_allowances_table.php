@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBasicPaysTable extends Migration
+class CreateAllowancesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,15 @@ class CreateBasicPaysTable extends Migration
      */
     public function up()
     {
-        Schema::create('basic_pays', function (Blueprint $table) {
+        Schema::create('allowances', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
+            $table->integer('amount');
+            $table->unsignedInteger('employee_id');
+            $table->integer('tax_flag')->default(0);
             $table->timestamps();
+
+            $table->index('employee_id');
         });
     }
 
@@ -26,6 +32,6 @@ class CreateBasicPaysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('basic_pays');
+        Schema::dropIfExists('allowances');
     }
 }

@@ -15,7 +15,13 @@ class CreateDeductionsTable extends Migration
     {
         Schema::create('deductions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
+            $table->integer('amount');
+            $table->unsignedInteger('employee_id');
+            $table->integer('type')->default(0);
             $table->timestamps();
+
+            $table->index('employee_id');
         });
     }
 

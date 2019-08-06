@@ -1,11 +1,54 @@
-employee_id     employee_name
-1		        Juan Dela Cruz
+employee_id     employee_name   branch_id   basic_pay
+1		        Juan Dela Cruz  1           22000
 
-basic_pay_id	basic_pay_name
-1		        Basic Pay
+branch_id       branch_name
+1               London Drive
 
-deduction_id	deduction_name
-1               Witholding Tax
+allowance_id	allowance_name          allowance_amount    tax_flag
+1		        Transport Allowance     1000                0
 
-payroll_id      payroll_start_date  payroll_end_date
-1               8/1/2019            8/15/2019
+-- Deduction Types --
+0   -   Deduction
+1   -   Witholding Tax
+2   -   SSS Contribution
+3   -   PhilHealth Contribution
+4   -   PAG-IBIG Contribution
+5   -   GSIS Contribution
+-- END --
+
+deduction_id	deduction_name  deduction_amount    deduction_type  employee_id
+1               Witholding Tax  0                   1               1
+2               Absences/Late   1000                0               1
+3               Wala lang       100                 0               1
+
+payroll_id      payroll_start_date  payroll_end_date    employee_id
+1               8/1/2019            8/15/2019           1
+
+--- SAMPLE OUTPUT ---
+Holy Child Academy
+Payroll
+August 1-15, 2019
+
+Juan Dela Cruz          London Drive
+
+Basic Pay               22000
+Add:
+    Allowance
+    Insurance
+    
+Less:
+    Witholding Tax      [COMPUTED]
+    Absences/Late       1000
+    Wala lang           100
+    Total:              [COMPUTED]
+
+Net Pay:                [COMPUTED]
+
+RECEIVED BY:            
+
+
+________________
+
+[END TEXT]
+
+--- END ---
