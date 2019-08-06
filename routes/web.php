@@ -11,10 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'Auth\LoginController@showLoginForm');
+
+
+Route::group(['prefix' => 'payroll'], function () {
+    Route::get('/', 'PayrollController@index')->name('home');
+    Route::get('/create', 'PayrollController@create')->name('payroll.create');
+    Route::post('/store', 'PayrollController@store')->name('payroll.store');
+});
