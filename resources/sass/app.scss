@@ -5,12 +5,12 @@
 @import 'variables';
 
 // Bootstrap Admin Template
-@import '../css/bootstrap-admin.css';
+@import '~startbootstrap-sb-admin-2/scss/sb-admin-2';
 
 // Bootstrap Datepicker
 @import '../css/bootstrap-datepicker3.standalone.min.css';
 
 // Font Awesome Icons
-@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
-@import "~@fortawesome/fontawesome-free/scss/solid.scss";
-@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";

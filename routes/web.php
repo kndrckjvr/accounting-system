@@ -14,11 +14,16 @@
 
 Auth::routes();
 
-Route::get('/', 'Auth\LoginController@showLoginForm');
+Route::get('/', 'Auth\LoginController@showLoginForm')->name('home.guest');
 
+Route::get('/dashboard', 'HomeController@index')->name('home');
+
+Route::get('/home', function() {
+    return 'huli ka';
+});
 
 Route::group(['prefix' => 'payroll'], function () {
-    Route::get('/', 'PayrollController@index')->name('home');
+    Route::get('/', 'PayrollController@index')->name('payroll.index');
     Route::get('/create', 'PayrollController@create')->name('payroll.create');
     Route::post('/store', 'PayrollController@store')->name('payroll.store');
 });
