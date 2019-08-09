@@ -21,12 +21,12 @@
     <li class="nav-item{{ explode('.', Route::currentRouteName())[0] == 'employee' ? ' active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#employeeCollapse" aria-expanded="true" aria-controls="employeeCollapse">
             <i class="fas fa-fw fa-user"></i>
-            <span>Employees</span>
+            <span>Employee</span>
         </a>
         <div id="employeeCollapse" class="collapse{{ explode('.', Route::currentRouteName())[0] == 'employee' ? ' show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">Add Employee</a>
-                <a class="collapse-item" href="#">Edit Employee</a>
+                <a class="collapse-item{{ Route::currentRouteName() == 'employee.create' ? ' active' : '' }}" href="{{ route('employee.create') }}">Add Employee</a>
+                <a class="collapse-item{{ Route::currentRouteName() == 'employee.index' ? ' active' : '' }}" href="{{ route('employee.index') }}">Edit Employee</a>
             </div>
         </div>
     </li>
@@ -38,7 +38,7 @@
         </a>
         <div id="payrollCollapse" class="collapse{{ explode('.', Route::currentRouteName())[0] == 'payroll' ? ' show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item{{ Route::currentRouteName() == 'payroll.index' ? ' active' : '' }}" href="{{ route('payroll.index') }}">
+                <a class="collapse-item{{ (Route::currentRouteName() == 'payroll.index' || Route::currentRouteName() == 'payroll.create') ? ' active' : '' }}" href="{{ route('payroll.index') }}">
                     <span>Generate Payroll</span>
                 </a>
             </div>

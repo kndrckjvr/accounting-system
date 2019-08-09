@@ -3,21 +3,22 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold">Payrolls</h6>
+        <div class="col-12">
+            @card
+                @slot('title')
+                    Payrolls
+                @endslot
+                @slot('header')
                     <a href="{{ route('payroll.create') }}" role="button" class="btn btn-primary">Create</a>
-                </div>
-
-                <div class="card-body">
+                @endslot
+                @slot('body')
                     @if(!$payrolls["items"])
                         {{ 'Empty Payroll' }}
                     @else
                         {{$payrolls}}
                     @endif
-                </div>
-            </div>
+                @endslot
+            @endcard
         </div>
     </div>
 </div>
