@@ -32,7 +32,7 @@
                 <div class="form-group">
                     <label for="branch">Branch</label>
                     <select class="form-control" name="branch" id="branch">
-                        @if($branches === [])
+                        @if($branches === null)
                         <option value="0">No Branches Found!</option>
                         @else
                         @foreach($branches as $branch)

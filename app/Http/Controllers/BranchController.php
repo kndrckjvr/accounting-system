@@ -8,6 +8,15 @@ use App\Branch;
 class BranchController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -15,8 +24,8 @@ class BranchController extends Controller
     public function index()
     {
         //
-        $branches = Branch::all();
-        return ($branches);
+        $branches = Branch::all()->count() == 0 ? null : Branch::all();
+        return (($branches == null) ? "true" : "false");
     }
 
     /**

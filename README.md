@@ -7,3 +7,4 @@ This is a system made for the ease of creating payrolls for Holy Child Academy E
 * jQuery (JavaScript)
 * Bootstrap (CSS & JavaScript)
 * Axios (JavaScript)
+* DataTables (JavaScript)

@@ -4,9 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Branch;
+use App\Employee;
 
 class EmployeeController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +25,9 @@ class EmployeeController extends Controller
     public function index()
     {
         //
-        return view('employee.index');
+        $employees = Employee::paginate(5);
+        // dd($employees);
+        return view('employee.index', compact('employees'));
     }
 
     /**
@@ -26,7 +38,7 @@ class EmployeeController extends Controller
     public function create()
     {
         //
-        $branches = Branch::all();
+        $branches = Branch::all()->count() == 0 ? null : Branch::all();
         return view('employee.create', compact('branches'));
     }
 

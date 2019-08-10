@@ -7,15 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     //
+    protected $guarded = [];
+
     public function branch() {
-        $this->hasOne(Branch::class);
+        return $this->belongsTo(Branch::class);
     }
 
     public function allowances() {
-        $this->hasMany(Allowance::class);
+        return $this->hasMany(Allowance::class);
     }
 
     public function deductions() {
-        $this->hasMany(Deduction::class);
+        return $this->hasMany(Deduction::class);
     }
 }

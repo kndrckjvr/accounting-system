@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Branch extends Model
 {
+    protected $guarded = [];
     //
     public function employees() {
-        $this->hasMany(Employee::class);
+        return $this->hasMany(Employee::class);
     }
 }
