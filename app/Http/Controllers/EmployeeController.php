@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Branch;
 use App\Employee;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -51,6 +52,25 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request);
+        $data = $request->validate([
+            'name' => 'required|unique:employees',
+            'basic_pay' => 'required|numeric',
+            'branch_id' => 'required|numeric'
+        ]);
+
+        $employee_number = DB::table('employees')->latest('employee_number')->first() == null ? '100' : DB::table('employees')->latest('employee_number')->first()->employee_number + 1;
+        
+// dd($employee_number);
+
+        Employee::create([
+            'name' => ucwords($data['name']),
+            'basic_pay' => $data['basic_pay'],
+            'branch_id' => $data['branch_id'],
+            'employee_number' => $employee_number
+        ]);
+        
+        return redirect()->back()->with('alert', $data['name'] . ' has been added.');
     }
 
     /**
@@ -73,6 +93,8 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         //
+        $employee = Employee::find($id);
+        return view('employee.edit', compact('employee'));
     }
 
     /**

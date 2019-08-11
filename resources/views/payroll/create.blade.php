@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
+<div class="row justify-content-center">
         <div class="col-12">
             @card
                 @slot('title')
@@ -43,7 +42,6 @@
             @endcard
         </div>
     </div>
-</div>
 
 <script type="text/javascript">
     jQuery(document).ready(function($) {

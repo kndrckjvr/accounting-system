@@ -1,51 +1,65 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12">
-            @card
+<div class="row justify-content-center">
+    <div class="col-12">
+        @card
             @slot('title')
-            Employee Create
+                Employee Create
             @endslot
+
             @slot('header')
-            <a href="#" role="button" class="btn btn-primary" id="click-upload">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <span class="pl-1">Upload CSV</span>
-            </a>
-            <form action="{{ route('employee.upload') }}" method="post" enctype="multipart/form-data" style="display:none" id="csv-form">
-                @csrf
-                <input type="file" name="csv" id="csv">
-            </form>
+                <a href="#" role="button" class="btn btn-primary" id="click-upload">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span class="pl-1">Upload CSV</span>
+                </a>
+                <form action="{{ route('employee.upload') }}" method="post" enctype="multipart/form-data" style="display:none" id="csv-form">
+                    @csrf
+                    <input type="file" name="csv" id="csv">
+                </form>
             @endslot
             @slot('body')
-            <form action="#" method="post">
-                @csrf
-                <div class="form-group">
-                    <label for="employee_name">Name</label>
-                    <input type="text" name="name" id="name" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="basicpay">Basic Pay</label>
-                    <input type="text" name="basicpay" id="basicpay" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="branch">Branch</label>
-                    <select class="form-control" name="branch" id="branch">
-                        @if($branches === null)
-                        <option value="0">No Branches Found!</option>
-                        @else
-                        @foreach($branches as $branch)
-                        <option value="{{$branch->id}}">{{$branch->name}}</option>
-                        @endforeach
+                <form action="{{ route('employee.store') }}" method="post">
+                    @csrf
+                    <div class="form-group">
+                        <label for="employee_name">Name</label>
+                        <input type="text" name="name" id="name" class="form-control{{ ($errors->has('name')) ? ' is-invalid' : '' }}" value="{{ old('name') ?? '' }}" />
+                        @if($errors->has('name'))
+                            <span class="invalid-feedback">
+                                {{$errors->first('name')}}
+                            </span>
                         @endif
-                    </select>
-                </div>
-                <input type="submit" value="Submit" class="btn btn-primary float-right">
-            </form>
+                    </div>
+                    <div class="form-group">
+                        <label for="basic_pay">Basic Pay</label>
+                        <input type="text" name="basic_pay" id="basic_pay" class="form-control{{ ($errors->has('basic_pay')) ? ' is-invalid' : '' }}" value="{{ old('basic_pay') ?? '' }}">
+                        @if($errors->has('basic_pay'))
+                            <span class="invalid-feedback">
+                                {{$errors->first('basic_pay')}}
+                            </span>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="branch">Branch</label>
+                        <select class="form-control" name="branch_id" id="branch_id">
+                            @if($branches === null)
+                            <option value="">No Branches Found!</option>
+                            @else
+                            @foreach($branches as $branch)
+                            <option value="{{$branch->id}}">{{$branch->name}}</option>
+                            @endforeach
+                            @endif
+                        </select>
+                        @if($errors->has('branch_id'))
+                            <span class="invalid-feedback">
+                                {{$errors->first('branch_id')}}
+                            </span>
+                        @endif
+                    </div>
+                    <input type="submit" value="Submit" class="btn btn-primary float-right">
+                </form>
             @endslot
-            @endcard
-        </div>
+        @endcard
     </div>
 </div>
 

@@ -32,7 +32,14 @@
             @endauth
 
             <div class="container-fluid">
-                @yield('content')
+                <div class="container">
+                    @if(Session::has('alert'))
+                        <div class="alert alert-success">
+                            {{Session::get('alert')}}
+                        </div>
+                    @endif
+                    @yield('content')
+                </div>
             </div>
         </div>
     </div>
