@@ -18,7 +18,6 @@ class CreateEmployeesTable extends Migration
             $table->string('name');
             $table->unsignedInteger('branch_id');
             $table->unsignedInteger('employee_number');
-            $table->integer('basic_pay');
             $table->timestamps();
             
             $table->index('branch_id');

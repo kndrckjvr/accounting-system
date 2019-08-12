@@ -20,42 +20,8 @@
             @endslot
             @slot('body')
                 <form action="{{ route('employee.store') }}" method="post">
+                    @include('employee.form')
                     @csrf
-                    <div class="form-group">
-                        <label for="employee_name">Name</label>
-                        <input type="text" name="name" id="name" class="form-control{{ ($errors->has('name')) ? ' is-invalid' : '' }}" value="{{ old('name') ?? '' }}" />
-                        @if($errors->has('name'))
-                            <span class="invalid-feedback">
-                                {{$errors->first('name')}}
-                            </span>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <label for="basic_pay">Basic Pay</label>
-                        <input type="text" name="basic_pay" id="basic_pay" class="form-control{{ ($errors->has('basic_pay')) ? ' is-invalid' : '' }}" value="{{ old('basic_pay') ?? '' }}">
-                        @if($errors->has('basic_pay'))
-                            <span class="invalid-feedback">
-                                {{$errors->first('basic_pay')}}
-                            </span>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <label for="branch">Branch</label>
-                        <select class="form-control" name="branch_id" id="branch_id">
-                            @if($branches === null)
-                            <option value="">No Branches Found!</option>
-                            @else
-                            @foreach($branches as $branch)
-                            <option value="{{$branch->id}}">{{$branch->name}}</option>
-                            @endforeach
-                            @endif
-                        </select>
-                        @if($errors->has('branch_id'))
-                            <span class="invalid-feedback">
-                                {{$errors->first('branch_id')}}
-                            </span>
-                        @endif
-                    </div>
                     <input type="submit" value="Submit" class="btn btn-primary float-right">
                 </form>
             @endslot

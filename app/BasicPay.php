@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Branch extends Model
+class BasicPay extends Model
 {
     protected $guarded = [];
-    //
+
     public function employees()
     {
-        return $this->hasMany(Employee::class);
+        return $this->belongsTo(Employee::class);
     }
 }

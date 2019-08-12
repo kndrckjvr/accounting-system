@@ -22,20 +22,28 @@
                                     <th style="width: 12%">Employee ID</th>
                                     <th>Employee Name</th>
                                     <th style="width: 20%">Branch Name</th>
-                                    <th>Actions</th>
+                                    <th style="width: 18%" class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($employees as $employee)
                                 <tr>
-                                    <td>{{$employee->employee_number}}</td>
-                                    <td>{{$employee->name}}</td>
-                                    <td>{{$employee->branch->name}}</td>
-                                    <td>
-                                        <a href="{{route('employee.edit', ['id' => $employee->id])}}" role="button" class="btn btn-warning">
-                                            <i class="fas fa-edit"></i>
-                                            <span>Edit</span>
-                                        </a>
+                                    <td class="align-middle">{{$employee->employee_number}}</td>
+                                    <td class="align-middle">
+                                        <a href="{{route('employee.show', ['employee'=>$employee->id])}}">{{$employee->name}}</a>
+                                    </td>
+                                    <td class="align-middle">{{$employee->branch->name}}</td>
+                                    <td class="align-middle">
+                                        <div class="d-flex flex-row align-items-center justify-content-between">
+                                            <a href="{{route('employee.edit', ['id' => $employee->id])}}" role="button" class="btn btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                                <span>Edit</span>
+                                            </a>
+                                            <a href="{{route('employee.edit', ['id' => $employee->id])}}" role="button" class="btn btn-danger">
+                                                <i class="fas fa-trash"></i>
+                                                <span>Delete</span>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach

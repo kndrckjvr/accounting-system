@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Branch;
 use App\Employee;
+use App\Branch;
 use Illuminate\Support\Facades\DB;
+use App\BasicPay;
 
 class EmployeeController extends Controller
 {
@@ -18,6 +19,7 @@ class EmployeeController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,9 +27,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
-        $employees = Employee::paginate(5);
-        // dd($employees);
+        $employees = Employee::all();
+
         return view('employee.index', compact('employees'));
     }
 
@@ -38,9 +39,10 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
-        $branches = Branch::all()->count() == 0 ? null : Branch::all();
-        return view('employee.create', compact('branches'));
+        $branches = count(Branch::all()) == 0 ? null : Branch::all();
+        $employee = new Employee();
+
+        return view('employee.create', compact('branches', 'employee'));
     }
 
     /**
@@ -51,72 +53,90 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // dd($request);
-        $data = $request->validate([
-            'name' => 'required|unique:employees',
-            'basic_pay' => 'required|numeric',
-            'branch_id' => 'required|numeric'
-        ]);
+        $data = $this->validateRequest($request);
+        $data['name'] = ucwords(strtolower($data['name']));
+        $data['employee_number'] = DB::table('employees')->latest('employee_number')->first() == null ?
+            '100' : DB::table('employees')->latest('employee_number')->first()->employee_number + 1;
+        $basicPay = $data['basic_pay'];
+        unset($data['basic_pay']);
 
-        $employee_number = DB::table('employees')->latest('employee_number')->first() == null ? '100' : DB::table('employees')->latest('employee_number')->first()->employee_number + 1;
-        
-// dd($employee_number);
+        $data['id'] = Employee::create($data)->id;
+        BasicPay::create(['employee_id' => $data['id'], 'amount' => $basicPay]);
 
-        Employee::create([
-            'name' => ucwords($data['name']),
-            'basic_pay' => $data['basic_pay'],
-            'branch_id' => $data['branch_id'],
-            'employee_number' => $employee_number
-        ]);
-        
         return redirect()->back()->with('alert', $data['name'] . ' has been added.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Employee $employee)
     {
-        //
+        // dd($employee);
+        return view('employee.show', compact('employee'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Employee $employee)
     {
-        //
-        $employee = Employee::find($id);
-        return view('employee.edit', compact('employee'));
+        $branches = Branch::all()->count() == 0 ? null : Branch::all();
+
+        return view('employee.edit', compact('employee', 'branches'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Employee $employee)
     {
-        //
+        $data = $this->validateRequest($request, $employee);
+        $data['name'] = ucwords(strtolower($data['name']));
+        $basicPay = $data['basic_pay'];
+        unset($data['basic_pay']);
+
+        $employee->update($data);
+
+        $employee->basic_pay()->update(['amount' => $basicPay]);
+
+        return redirect('/employee')->with('alert', $data['name'] . ' has been updated.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Employee $employee)
     {
         //
+    }
+
+
+    /**
+     * Validates the user inputs.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Employee  $employee
+     * @return array
+     */
+    public function validateRequest(Request $request, Employee $employee = null)
+    {
+        return $request->validate([
+            'name' => ($employee == null) ? 'required|unique:employees' : ($request['name'] != $employee->name) ? 'required|unique:employees' : 'required',
+            'basic_pay' => 'required|numeric',
+            'branch_id' => 'required|numeric'
+        ]);
     }
 }

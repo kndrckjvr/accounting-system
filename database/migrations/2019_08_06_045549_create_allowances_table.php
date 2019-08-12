@@ -17,11 +17,8 @@ class CreateAllowancesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->integer('amount');
-            $table->unsignedInteger('employee_id');
             $table->integer('tax_flag')->default(0);
             $table->timestamps();
-
-            $table->index('employee_id');
         });
     }
 

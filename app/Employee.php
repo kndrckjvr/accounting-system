@@ -9,15 +9,18 @@ class Employee extends Model
     //
     protected $guarded = [];
 
-    public function branch() {
+    public function branch()
+    {
         return $this->belongsTo(Branch::class);
     }
 
-    public function allowances() {
-        return $this->hasMany(Allowance::class);
+    public function basic_pay()
+    {
+        return $this->hasOne(BasicPay::class);
     }
 
-    public function deductions() {
-        return $this->hasMany(Deduction::class);
+    public function payrolls()
+    {
+        return $this->hasMany(Payroll::class);
     }
 }

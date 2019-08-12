@@ -24,11 +24,11 @@
 <body id="page-top">
     <div id="wrapper">
         @auth
-        @component('layouts.sidebar_navigation') @endcomponent
+        @include('layouts.sidebar_navigation')
         @endauth
         <div id="content-wrapper" class="d-flex flex-column">
             @auth
-            @component('layouts.topbar_navigation') @endcomponent
+            @include('layouts.topbar_navigation')
             @endauth
 
             <div class="container-fluid">

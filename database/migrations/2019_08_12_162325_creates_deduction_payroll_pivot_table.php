@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePayrollsTable extends Migration
+class CreatesDeductionPayrollPivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreatePayrollsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payrolls', function (Blueprint $table) {
+        Schema::create('deduction_payroll', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('employee_id');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->unsignedInteger('deduction_id');
+            $table->unsignedInteger('payroll_id');
             $table->timestamps();
 
-            $table->index('employee_id');
+            $table->index('deduction_id');
+            $table->index('payroll_id');
         });
     }
 
@@ -31,6 +31,6 @@ class CreatePayrollsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payrolls');
+        Schema::dropIfExists('deduction_payroll');
     }
 }
