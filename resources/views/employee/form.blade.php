@@ -9,7 +9,7 @@
 </div>
 <div class="form-group">
     <label for="basic_pay">Basic Pay</label>
-    <input type="text" name="basic_pay" id="basic_pay" class="form-control{{ ($errors->has('basic_pay')) ? ' is-invalid' : '' }}" value="{{ old('basic_pay') ?? $employee->basic_pay->amount }}">
+    <input type="text" name="basic_pay" id="basic_pay" class="form-control{{ ($errors->has('basic_pay')) ? ' is-invalid' : '' }}" value="{{ old('basic_pay') ?? ($employee->basic_pay == null) ? '' : $employee->basic_pay->amount }}">
     @if($errors->has('basic_pay'))
     <span class="invalid-feedback">
         {{$errors->first('basic_pay')}}

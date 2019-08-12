@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Branch;
+use Illuminate\Http\Request;
 
 class BranchController extends Controller
 {
@@ -16,6 +16,7 @@ class BranchController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +24,8 @@ class BranchController extends Controller
      */
     public function index()
     {
-        //
-        $branches = Branch::all()->count() == 0 ? null : Branch::all();
-        return (($branches == null) ? "true" : "false");
+        $branches = Branch::all();
+        return view('branch.index', compact('branches'));
     }
 
     /**
@@ -35,7 +35,9 @@ class BranchController extends Controller
      */
     public function create()
     {
-        //
+        $branch = new Branch();
+
+        return view('branch.create', compact('branch'));
     }
 
     /**
@@ -46,51 +48,69 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->validateRequest();
+        $data['name'] = ucwords(strtolower($data['name']));
+
+        Branch::create($data);
+
+        return redirect()->back()->with('alert', $data['name'] . ' has been added.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Branch $branch)
     {
         //
+        return view('branch.show', compact('branch'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Branch $branch)
     {
-        //
+        return view('branch.edit', compact('branch'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Branch $branch)
     {
-        //
+        $data = $this->validateRequest();
+        $data['name'] = ucwords(strtolower($data['name']));
+
+       $branch->update($data);
+
+        return redirect('/branch')->with('alert', $data['name'] . ' has been updated.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Branch $branch)
     {
         //
     }
+
+    public function validateRequest()
+    {
+        return request()->validate([
+            'name' => 'required|min:3'
+        ]);
+     }
 }

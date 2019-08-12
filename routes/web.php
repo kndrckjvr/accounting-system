@@ -32,6 +32,9 @@ Route::post('/branch/try', 'BranchController@try');
 Route::post('/employee/upload', function() {
     return 'file has been uploaded';
 })->name('employee.upload');
+Route::post('/branch/upload', function() {
+    return 'file has been uploaded';
+})->name('branch.upload');
 
 // Route::group(['prefix' => 'payroll'], function () {
 //     Route::get('/', 'PayrollController@index')->name('payroll.index');

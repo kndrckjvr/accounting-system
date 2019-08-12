@@ -45,6 +45,19 @@
         </div>
     </li>
 
+    <li class="nav-item{{ explode('.', Route::currentRouteName())[0] == 'branch' ? ' active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#branchCollapse" aria-expanded="true" aria-controls="Collapse">
+            <i class="fas fa-fw fa-building"></i>
+            <span>Branch</span>
+        </a>
+        <div id="branchCollapse" class="collapse{{ explode('.', Route::currentRouteName())[0] == 'branch' ? ' show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item{{ Route::currentRouteName() == 'branch.create' ? ' active' : '' }}" href="{{ route('branch.create') }}">Add Branch</a>
+                <a class="collapse-item{{ Route::currentRouteName() == 'branch.index' ? ' active' : '' }}" href="{{ route('branch.index') }}">Edit Branch</a>
+            </div>
+        </div>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
