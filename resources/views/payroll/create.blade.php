@@ -13,7 +13,7 @@
                 @endslot
 
                 @slot('body')
-                <form action="#" id="payroll_form" method="post">
+                <form action="{{ route('payroll.store') }}" id="payroll_form" method="post">
                     @csrf
                     <div class="form-row">
                         <div class="form-group col-6">
@@ -36,6 +36,26 @@
                             @endif
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <label for="branch">Branch</label>
+                            <select name="branch" id="branch" class="form-control">
+                                @if(!count($branches))
+                                    <option value="">No Branches Found!</option>
+                                @else
+                                    <option value="0">All Branches</option>
+                                    @foreach($branches as $branch)
+                                        <option value="{{$branch->id}}">{{$branch->name}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            @if($errors->has('branch'))
+                            <span class="invalid-feedback">
+                                {{$errors->first('branch')}}
+                            </span>
+                            @endif
+                        </div>
+                    </div>
                     <input type="submit" value="Proceed" class="btn btn-primary float-right" />
                 </form>
                 @endslot
@@ -49,17 +69,17 @@
             autoclose: true
         });
 
-        $("#payroll_form").on('submit', function(e) {
-            e.preventDefault();
-            axios.post(
-                '{{ route('payroll.store') }}', {
-                    start_date: $('#start_date').val(),
-                    end_date: $('#end_date').val()
-                }
-            ).then((res) => {
-                console.log(res.data);
-            })
-        });
+        // $("#payroll_form").on('submit', function(e) {
+        //     e.preventDefault();
+        //     axios.post(
+        //         '{{ route('payroll.store') }}', {
+        //             start_date: $('#start_date').val(),
+        //             end_date: $('#end_date').val()
+        //         }
+        //     ).then((res) => {
+        //         console.log(res.data);
+        //     })
+        // });
     });
 </script>
 @endsection

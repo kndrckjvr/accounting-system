@@ -9,6 +9,9 @@
             @endslot
 
             @slot('header')
+                <a href="{{route('employee.create')}}" role="button" class="btn btn-primary">
+                    Create
+                </a>
             @endslot
 
             @slot('body')

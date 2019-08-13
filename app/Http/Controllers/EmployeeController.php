@@ -63,7 +63,7 @@ class EmployeeController extends Controller
         $data['id'] = Employee::create($data)->id;
         BasicPay::create(['employee_id' => $data['id'], 'amount' => $basicPay]);
 
-        return redirect()->back()->with('alert', $data['name'] . ' has been added.');
+        return redirect('/employee')->with('alert', $data['name'] . ' has been added.');
     }
 
     /**

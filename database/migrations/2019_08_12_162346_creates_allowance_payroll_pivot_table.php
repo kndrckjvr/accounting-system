@@ -15,7 +15,12 @@ class CreatesAllowancePayrollPivotTable extends Migration
     {
         Schema::create('allowance_payroll', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('allowance_id');
+            $table->unsignedInteger('payroll_id');
             $table->timestamps();
+            
+            $table->index('allowance_id');
+            $table->index('payroll_id');
         });
     }
 

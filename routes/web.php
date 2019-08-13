@@ -11,16 +11,16 @@
 |
 */
 
-
 Auth::routes();
 
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('home.guest');
 
 Route::get('/dashboard', 'HomeController@index')->name('home');
 
-Route::get('/home', function() {
+Route::get('/home', function () {
     return 'huli ka';
 });
+
 
 Route::resources([
     'payroll' => 'PayrollController',
@@ -28,13 +28,21 @@ Route::resources([
     'branch' => 'BranchController'
 ]);
 
-Route::post('/branch/try', 'BranchController@try');
-Route::post('/employee/upload', function() {
+// Payroll Extra Routes
+Route::get('/payroll/{payroll}/edit/{payslip}', 'PayrollController@editPaySlip')->name('payroll.payslip');
+Route::post('/payroll/{payroll}/post', 'PayrollController@editPaySlip')->name('payroll.post');
+
+// Employee Extra Routes
+Route::post('/employee/upload', function () {
     return 'file has been uploaded';
 })->name('employee.upload');
-Route::post('/branch/upload', function() {
+
+// Branch Extra Routes
+Route::post('/branch/upload', function () {
     return 'file has been uploaded';
 })->name('branch.upload');
+
+
 
 // Route::group(['prefix' => 'payroll'], function () {
 //     Route::get('/', 'PayrollController@index')->name('payroll.index');

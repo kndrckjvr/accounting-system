@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Deduction extends Model
 {
-    public function payrolls() {
+    protected $guarded = [];
+    
+    public function payrolls()
+    {
         return $this->belongsToMany(Payroll::class);
     }
 }
