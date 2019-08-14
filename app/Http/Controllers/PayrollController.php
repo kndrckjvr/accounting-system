@@ -117,8 +117,9 @@ class PayrollController extends Controller
     public function edit($payroll)
     {
         $payrolls = Payroll::where('payroll_code', $payroll)->get();
+        $payroll_code = $payroll;
 
-        return view('payroll.edit', compact('payrolls'));
+        return view('payroll.edit', compact('payrolls', 'payroll_code'));
     }
 
     /**

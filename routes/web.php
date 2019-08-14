@@ -25,8 +25,14 @@ Route::get('/home', function () {
 Route::resources([
     'payroll' => 'PayrollController',
     'employee' => 'EmployeeController',
-    'branch' => 'BranchController'
+    'branch' => 'BranchController',
 ]);
+
+Route::resource('allowance', 'AllowanceController')->except([
+    'index'
+]);
+
+Route::get('allowance/{payroll_code}/{employee_id}', 'AllowanceController@index')->name('allowance.index');
 
 // Payroll Extra Routes
 Route::get('/payroll/{payroll}/edit/{payslip}', 'PayrollController@editPaySlip')->name('payroll.payslip');

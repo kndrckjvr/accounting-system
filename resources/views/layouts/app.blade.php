@@ -46,6 +46,7 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+    @yield('modals')
     <script src="{{ asset('js/bootstrap-sb-admin.js') }}"></script>
 </body>
 

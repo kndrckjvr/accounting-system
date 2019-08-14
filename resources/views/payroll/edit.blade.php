@@ -8,7 +8,7 @@
                 Edit Payroll
             @endslot
             @slot('header')
-                <a href="{{route('payroll.post', ['payroll' => $payrolls[0]->payroll_code])}}" class="btn btn-success">
+                <a href="{{route('payroll.post', ['payroll' => $payroll_code])}}" class="btn btn-success">
                     Post
                 </a>
             @endslot
