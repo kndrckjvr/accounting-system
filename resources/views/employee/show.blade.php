@@ -14,8 +14,14 @@
             @endslot
             @slot('body')
                 <p>{{$employee->name}}</p>
-                <p>{{$employee->basic_pay->amount}}</p>
-                <p>{{$employee->branch->name}}</p>
+                <p>{{$employee->current_basic_pay->amount}}</p>
+                <p>{{$employee->branch->name}}</p><br/>
+                <p>Basic Pay History</p>
+                <ul>
+                    @foreach($employee->basic_pay as $basic_pay)
+                        <li><strong>{{$basic_pay->amount}}</strong> {{date('F j, Y', strtotime($basic_pay->created_at))}}</li>
+                    @endforeach
+                </ul>
             @endslot
         @endcard
     </div>

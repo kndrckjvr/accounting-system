@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Allowance;
+use App\Deduction;
 use App\Payroll;
 use Illuminate\Http\Request;
 
-class AllowanceController extends Controller
+class DeductionController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -29,7 +29,7 @@ class AllowanceController extends Controller
     {
         $payslip = Payroll::where(['payroll_code' => $payroll_code, 'employee_id' => $employee_id])->first();
         
-        return view('allowance.index', compact('payslip'));
+        return view('deduction.index', compact('payslip'));
     }
 
     /**
@@ -42,8 +42,9 @@ class AllowanceController extends Controller
     public function create($payroll_code, $employee_id)
     {
         $payslip = Payroll::where(['payroll_code' => $payroll_code, 'employee_id' => $employee_id])->first();
-        $allowance = new Allowance();
-        return view('allowance.create', compact('payslip', 'allowance'));
+        $deduction = new Deduction();
+        $deduction->type = 0;
+        return view('deduction.create', compact('payslip', 'deduction'));
     }
 
     /**
@@ -56,18 +57,18 @@ class AllowanceController extends Controller
     {
         $data = $this->validateRequest();
         // dd($data);
-        $allowance = Allowance::create($data['allowanceData']);
-        Payroll::where(['payroll_code' => $data['payroll_code'], 'employee_id' => $data['employee_id']])->first()->allowances()->attach($allowance);
-        return redirect('/allowance/'.$data['payroll_code'] .'/'.$data['employee_id'] )->with('alert', $data['allowanceData']['name'] . ' has been added.');
+        $deduction = Deduction::create($data['deductionData']);
+        Payroll::where(['payroll_code' => $data['payroll_code'], 'employee_id' => $data['employee_id']])->first()->deductions()->attach($deduction);
+        return redirect('/deduction/'.$data['payroll_code'] .'/'.$data['employee_id'] )->with('alert', $data['deductionData']['name'] . ' has been added.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Allowance  $allowance
+     * @param  \App\Deduction  $deduction
      * @return \Illuminate\Http\Response
      */
-    public function show(Allowance $allowance)
+    public function show(Deduction $deduction)
     {
         //
     }
@@ -75,39 +76,39 @@ class AllowanceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Allowance  $allowance
+     * @param  \App\Deduction  $deduction
      * @return \Illuminate\Http\Response
      */
-    public function edit(Allowance $allowance)
+    public function edit(Deduction $deduction)
     {
-        $payslip = $allowance->payrolls[0];
-        return view('allowance.edit', compact('allowance' ,'payslip'));
+        $payslip = $deduction->payrolls[0];
+        return view('deduction.edit', compact('deduction' ,'payslip'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Allowance  $allowance
+     * @param  \App\Deduction  $deduction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Allowance $allowance)
+    public function update(Request $request, Deduction $deduction)
     {
         $data = $this->validateRequest();
         // dd($data);
 
-        $allowance->update($data['allowanceData']);
+        $deduction->update($data['deductionData']);
 
-        return redirect('/allowance/'.$data['payroll_code'] .'/'.$data['employee_id'] )->with('alert', $data['allowanceData']['name'] . ' has been updated.');
+        return redirect('/deduction/'.$data['payroll_code'] .'/'.$data['employee_id'] )->with('alert', $data['deductionData']['name'] . ' has been updated.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Allowance  $allowance
+     * @param  \App\Deduction  $deduction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Allowance $allowance)
+    public function destroy(Deduction $deduction)
     {
         //
     }
@@ -116,14 +117,12 @@ class AllowanceController extends Controller
         $data = request()->validate([
             'name' => 'required',
             'amount' => 'required|numeric',
-            'tax_flag' => '',
+            'type' => 'required|numeric',
             'payroll_code' => '',
             'employee_id' => '',
         ]);
 
         $data['name'] = ucwords(strtolower($data['name']));
-
-        $data['tax_flag'] = (array_key_exists('tax_flag', $data)) ? 1 : 0;
 
         $payroll_code = $data['payroll_code'];
         $employee_id = $data['employee_id'];
@@ -131,7 +130,7 @@ class AllowanceController extends Controller
         unset($data['employee_id']);
 
         return array(
-            'allowanceData' => $data,
+            'deductionData' => $data,
             'payroll_code' => $payroll_code,
             'employee_id' => $employee_id
         );

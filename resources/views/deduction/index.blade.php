@@ -5,7 +5,7 @@
         <div class="col-12">
             @card
                 @slot('title')
-                    Edit Allowance: {{$payslip->employee->name}}
+                    Edit Deduction: {{$payslip->employee->name}}
                 @endslot
                 @slot('header')
                     <div>
@@ -14,40 +14,39 @@
                             >
                             Return
                         </a>
-                        <a href="{{route('allowance.create', ['payroll_code' => $payslip->payroll_code, 'employee_id' => $payslip->employee->id])}}"
+                        <a href="{{route('deduction.create', ['payroll_code' => $payslip->payroll_code, 'employee_id' => $payslip->employee->id])}}"
                             class="btn btn-success"
                             >
                             Create
                         </a>
                     </div>
-                    <!-- Papalitan ng uri /allowance/create/{payroll_code}/{employee_id} -->
                 @endslot
                 @slot('body')
-                    @if(!count($payslip->allowances))
-                        <h6>No Allowance Found</h6>
+                    @if(!count($payslip->deductions))
+                        <h6>No Deduction Found</h6>
                     @else
                         <div class="table-responsive">
                             <table id="table_id" class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Allowance Name</th>
+                                        <th>Deduction Name</th>
                                         <th style="width: 20%">Amount</th>
-                                        <th style="width: 12%">Taxable</th>
+                                        <th style="width: 12%">Type</th>
                                         <th style="width: 18%" class="text-center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($payslip->allowances as $allowance)
+                                    @foreach($payslip->deductions as $deduction)
                                         <tr>
-                                            <td class="align-middle">{{$allowance->name}}</td>
-                                            <td class="align-middle">{{$allowance->amount}}</td>
-                                            <td class="align-middle">{{$allowance->tax_flag}}</td>
+                                            <td class="align-middle">{{$deduction->name}}</td>
+                                            <td class="align-middle">{{$deduction->amount}}</td>
+                                            <td class="align-middle">{{$deduction->type}}</td>
                                             <td class="align-middle">
-                                                <a href="{{route('allowance.edit', ['id' => $allowance->id])}}" role="button" class="btn btn-warning">
+                                                <a href="{{route('deduction.edit', ['id' => $deduction->id])}}" role="button" class="btn btn-warning">
                                                     <i class="fas fa-edit"></i>
                                                     <span>Edit</span>
                                                 </a>
-                                                <a href="{{route('allowance.destroy', ['id' => $allowance->id])}}" role="button" class="btn btn-danger">
+                                                <a href="{{route('deduction.destroy', ['id' => $deduction->id])}}" role="button" class="btn btn-danger">
                                                     <i class="fas fa-trash"></i>
                                                     <span>Delete</span>
                                                 </a>

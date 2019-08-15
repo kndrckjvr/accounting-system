@@ -33,7 +33,7 @@
         <br />
         <div class="d-flex flex-row align-items-center justify-content-between">
             <h2>Deduction</h2>
-            <a href="#" role="button" class="btn btn-primary">
+            <a href="{{route('deduction.index', ['payroll_code' => $payslips->payroll_code, 'employee_id' => $payslips->employee->id])}}" role="button" class="btn btn-primary">
                 Edit Deduction
             </a>
         </div>

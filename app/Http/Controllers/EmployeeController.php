@@ -74,7 +74,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        // dd($employee);
+        // dd($employee->current_basic_pay());
         return view('employee.show', compact('employee'));
     }
 
@@ -106,8 +106,11 @@ class EmployeeController extends Controller
         unset($data['basic_pay']);
 
         $employee->update($data);
-
-        $employee->basic_pay()->update(['amount' => $basicPay]);
+        
+        BasicPay::create([
+            'employee_id' => $employee->id,
+            'amount' => $basicPay
+        ]);
 
         return redirect('/employee')->with('alert', $data['name'] . ' has been updated.');
     }

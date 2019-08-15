@@ -29,10 +29,18 @@ Route::resources([
 ]);
 
 Route::resource('allowance', 'AllowanceController')->except([
-    'index'
+    'index', 'create'
+]);
+
+Route::resource('deduction', 'DeductionController')->except([
+    'index', 'create'
 ]);
 
 Route::get('allowance/{payroll_code}/{employee_id}', 'AllowanceController@index')->name('allowance.index');
+Route::get('allowance/create/{payroll_code}/{employee_id}', 'AllowanceController@create')->name('allowance.create');
+
+Route::get('deduction/{payroll_code}/{employee_id}', 'DeductionController@index')->name('deduction.index');
+Route::get('deduction/create/{payroll_code}/{employee_id}', 'DeductionController@create')->name('deduction.create');
 
 // Payroll Extra Routes
 Route::get('/payroll/{payroll}/edit/{payslip}', 'PayrollController@editPaySlip')->name('payroll.payslip');
