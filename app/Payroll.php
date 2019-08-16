@@ -18,6 +18,11 @@ class Payroll extends Model
         return $this->belongsToMany(Allowance::class);
     }
 
+    public function taxable_allowances()
+    {
+        return $this->belongsToMany(Allowance::class)->where('tax_flag', 1);
+    }
+
     public function deductions()
     {
         return $this->belongsToMany(Deduction::class);

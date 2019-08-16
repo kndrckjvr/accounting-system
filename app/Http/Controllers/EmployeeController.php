@@ -41,7 +41,7 @@ class EmployeeController extends Controller
     {
         $branches = count(Branch::all()) == 0 ? null : Branch::all();
         $employee = new Employee();
-
+        $employee->basic_pay->amount = null;
         return view('employee.create', compact('branches', 'employee'));
     }
 

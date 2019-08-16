@@ -16,9 +16,9 @@ class CreateBasicPaysTable extends Migration
         Schema::create('basic_pays', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('employee_id');
-            $table->integer('amount');
+            $table->float('amount', 8, 2);
             $table->timestamps();
-            
+
             $table->index('employee_id');
         });
     }

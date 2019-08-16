@@ -8,15 +8,21 @@
         Payslip: {{$payslips->employee->name}}
         @endslot
         @slot('header')
-        <a href="{{route('payroll.edit', ['payroll' => $payslips->payroll_code])}}" class="btn btn-danger">
-            Return
-        </a>
+        <div>
+            <a href="{{route('payroll.edit', ['payroll' => $payslips->payroll_code])}}" class="btn btn-success">
+                Generate Pay Slip
+            </a>
+            <a href="{{route('payroll.edit', ['payroll' => $payslips->payroll_code])}}" class="btn btn-danger">
+                Return
+            </a>
+        </div>
         @endslot
         @slot('body')
-        <p>{{$payslips->employee->name}}</p>
+        <h1>{{$payslips->employee->name}}</h1>
         <ul>
             <li>{{$payslips->employee->employee_number}}</li>
             <li>{{$payslips->employee->branch->name}}</li>
+            <li>{{$payslips->employee->current_basic_pay->amount}}</li>
         </ul>
         <br />
         <div class="d-flex flex-row align-items-center justify-content-between">

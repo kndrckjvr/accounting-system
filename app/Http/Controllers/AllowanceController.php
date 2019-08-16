@@ -27,7 +27,7 @@ class AllowanceController extends Controller
      */
     public function index($payroll_code, $employee_id)
     {
-        $payslip = Payroll::where(['payroll_code' => $payroll_code, 'employee_id' => $employee_id])->first();
+        $payslip = Payroll::where(['payroll_code' => $payroll_code, 'employee_id' => $employee_id])->firstOrFail();
         
         return view('allowance.index', compact('payslip'));
     }
@@ -41,7 +41,7 @@ class AllowanceController extends Controller
      */
     public function create($payroll_code, $employee_id)
     {
-        $payslip = Payroll::where(['payroll_code' => $payroll_code, 'employee_id' => $employee_id])->first();
+        $payslip = Payroll::where(['payroll_code' => $payroll_code, 'employee_id' => $employee_id])->firstOrFail();
         $allowance = new Allowance();
         return view('allowance.create', compact('payslip', 'allowance'));
     }
@@ -57,7 +57,7 @@ class AllowanceController extends Controller
         $data = $this->validateRequest();
         // dd($data);
         $allowance = Allowance::create($data['allowanceData']);
-        Payroll::where(['payroll_code' => $data['payroll_code'], 'employee_id' => $data['employee_id']])->first()->allowances()->attach($allowance);
+        Payroll::where(['payroll_code' => $data['payroll_code'], 'employee_id' => $data['employee_id']])->firstOrFail()->allowances()->attach($allowance);
         return redirect('/allowance/'.$data['payroll_code'] .'/'.$data['employee_id'] )->with('alert', $data['allowanceData']['name'] . ' has been added.');
     }
 

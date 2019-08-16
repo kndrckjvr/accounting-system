@@ -23,4 +23,26 @@
             @endcard
         </div>
     </div>
+    <script>
+        $("#type").on('change', function (e) {
+            switch($(e.currentTarget).val()) {
+                case "1":
+                    $('#name').val("Witholding Tax");
+                    $('#amount').val(0);
+                break;
+                case "2":
+                    $('#name').val("SSS Contribution");
+                    $('#amount').val(0);
+                break;
+                case "3":
+                    $('#name').val("PhilHealth Contribution");
+                    $('#amount').val(0);
+                break;
+                case "4":
+                    $('#name').val("PAGIBIG Contribution");
+                    $('#amount').val(0);
+                break;
+            }
+        });
+    </script>
 @endsection
