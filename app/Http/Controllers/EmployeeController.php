@@ -41,7 +41,7 @@ class EmployeeController extends Controller
     {
         $branches = count(Branch::all()) == 0 ? null : Branch::all();
         $employee = new Employee();
-        $employee->basic_pay->amount = null;
+        
         return view('employee.create', compact('branches', 'employee'));
     }
 
@@ -87,7 +87,6 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         $branches = Branch::all()->count() == 0 ? null : Branch::all();
-
         return view('employee.edit', compact('employee', 'branches'));
     }
 
@@ -123,7 +122,9 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        $employee->delete();
+
+        return redirect('/employee')->with('alert', $employee->name . ' has been deleted.');
     }
 
 

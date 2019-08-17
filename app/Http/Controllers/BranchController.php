@@ -53,7 +53,7 @@ class BranchController extends Controller
 
         Branch::create($data);
 
-        return redirect()->back()->with('alert', $data['name'] . ' has been added.');
+        return redirect('/branch')->with('alert', $data['name'] . ' has been added.');
     }
 
     /**
@@ -104,7 +104,9 @@ class BranchController extends Controller
      */
     public function destroy(Branch $branch)
     {
-        //
+        $branch->delete();
+
+        return redirect('/branch')->with('alert', $branch->name . ' has been deleted.');
     }
 
     public function validateRequest()

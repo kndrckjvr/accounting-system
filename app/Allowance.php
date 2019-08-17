@@ -8,9 +8,9 @@ class Allowance extends Model
 {
     protected $guarded = [];
 
-    public function payrolls()
+    public function payroll()
     {
-        return $this->belongsToMany(Payroll::class);
+        return $this->belongsTo(Payroll::class);
     }
     
     public function getTaxFlagAttribute($attribute)

@@ -10,4 +10,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function filterData($keys, $array)
+    {
+        foreach ($keys as $key)
+            unset($array[$key]);
+
+        return $array;
+    }
 }

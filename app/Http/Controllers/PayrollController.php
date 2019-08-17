@@ -132,7 +132,7 @@ class PayrollController extends Controller
     public function editPaySlip($payroll, $payslip)
     {
         $payslips = Payroll::where(['payroll_code' => $payroll, 'employee_id' => $payslip])->firstOrFail();
-        // dd($payslips);
+        
         return view('payroll.payslip', compact('payslips'));
     }
 

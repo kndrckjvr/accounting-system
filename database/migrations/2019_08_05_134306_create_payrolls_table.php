@@ -17,6 +17,7 @@ class CreatePayrollsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('employee_id');
             $table->string('payroll_code');
+            $table->integer('posted')->default(0);
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();

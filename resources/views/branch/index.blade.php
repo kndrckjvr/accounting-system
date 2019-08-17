@@ -19,7 +19,7 @@
                     <h6>No Branches found!</h6>
                 @else
                     <div class="table-responsive">
-                        <table id="table_id" class="table table-bordered">
+                        <table id="branch-table" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th style="width: 12%">Branch ID</th>
@@ -35,16 +35,18 @@
                                         <a href="{{route('branch.show', ['branch'=>$branch->id])}}">{{$branch->name}}</a>
                                     </td>
                                     <td class="align-middle">
-                                        <div class="d-flex flex-row align-items-center justify-content-between">
+                                        <form action="{{route('branch.destroy', ['branch' => $branch->id])}}" method="post" id="delete-form">
+                                            @method('DELETE')
+                                            @csrf
                                             <a href="{{route('branch.edit', ['id' => $branch->id])}}" role="button" class="btn btn-warning">
                                                 <i class="fas fa-edit"></i>
                                                 <span>Edit</span>
                                             </a>
-                                            <a href="{{route('branch.edit', ['id' => $branch->id])}}" role="button" class="btn btn-danger">
+                                            <button type="submit" class="btn btn-danger">
                                                 <i class="fas fa-trash"></i>
                                                 <span>Delete</span>
-                                            </a>
-                                        </div>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -59,7 +61,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#table_id').DataTable();
+        $('#branch-table').DataTable();
     });
 </script>
 

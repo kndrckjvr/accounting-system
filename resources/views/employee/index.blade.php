@@ -37,16 +37,18 @@
                                     </td>
                                     <td class="align-middle">{{$employee->branch->name}}</td>
                                     <td class="align-middle">
-                                        <div class="d-flex flex-row align-items-center justify-content-between">
+                                        <form action="{{route('employee.destroy', ['employee' => $employee->id])}}" method="post" id="delete-form">
+                                            @method('DELETE')
+                                            @csrf
                                             <a href="{{route('employee.edit', ['id' => $employee->id])}}" role="button" class="btn btn-warning">
                                                 <i class="fas fa-edit"></i>
                                                 <span>Edit</span>
                                             </a>
-                                            <a href="{{route('employee.edit', ['id' => $employee->id])}}" role="button" class="btn btn-danger">
+                                            <button type="submit" class="btn btn-danger">
                                                 <i class="fas fa-trash"></i>
                                                 <span>Delete</span>
-                                            </a>
-                                        </div>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach

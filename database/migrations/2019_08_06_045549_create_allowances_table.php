@@ -18,7 +18,10 @@ class CreateAllowancesTable extends Migration
             $table->string('name');
             $table->float('amount', 8, 2);
             $table->integer('tax_flag')->default(0);
+            $table->unsignedInteger('payroll_id');
             $table->timestamps();
+
+            $table->index('payroll_id');
         });
     }
 

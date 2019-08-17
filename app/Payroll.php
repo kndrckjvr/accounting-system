@@ -15,16 +15,16 @@ class Payroll extends Model
 
     public function allowances()
     {
-        return $this->belongsToMany(Allowance::class);
+        return $this->hasMany(Allowance::class);
     }
 
     public function taxable_allowances()
     {
-        return $this->belongsToMany(Allowance::class)->where('tax_flag', 1);
+        return $this->hasMany(Allowance::class)->where('tax_flag', 1);
     }
 
     public function deductions()
     {
-        return $this->belongsToMany(Deduction::class);
+        return $this->hasMany(Deduction::class);
     }
 }

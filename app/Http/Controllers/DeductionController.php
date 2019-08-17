@@ -56,9 +56,9 @@ class DeductionController extends Controller
     public function store(Request $request)
     {
         $data = $this->validateRequest();
-        // dd($data);
-        $deduction = Deduction::create($data['deductionData']);
-        Payroll::where(['payroll_code' => $data['payroll_code'], 'employee_id' => $data['employee_id']])->firstOrFail()->deductions()->attach($deduction);
+        
+        Deduction::create($data['deductionData']);
+
         return redirect('/deduction/' . $data['payroll_code'] . '/' . $data['employee_id'])->with('alert', $data['deductionData']['name'] . ' has been added.');
     }
 
@@ -81,7 +81,7 @@ class DeductionController extends Controller
      */
     public function edit(Deduction $deduction)
     {
-        $payslip = $deduction->payrolls[0];
+        $payslip = $deduction->payroll;
         return view('deduction.edit', compact('deduction', 'payslip'));
     }
 
@@ -95,7 +95,6 @@ class DeductionController extends Controller
     public function update(Request $request, Deduction $deduction)
     {
         $data = $this->validateRequest();
-        // dd($data);
 
         $deduction->update($data['deductionData']);
 
@@ -108,9 +107,11 @@ class DeductionController extends Controller
      * @param  \App\Deduction  $deduction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Deduction $deduction)
+    public function destroy(Deduction $deduction, $payroll_code, $employee_id)
     {
-        //
+        $deduction->delete();
+
+        return redirect('/deduction/' . $payroll_code . '/' . $employee_id)->with('alert', $deduction->name . ' has been deleted.');
     }
 
     public function validateRequest()
@@ -121,6 +122,7 @@ class DeductionController extends Controller
             'type' => 'required|numeric',
             'payroll_code' => '',
             'employee_id' => '',
+            'half' => '',
         ]);
 
         if ($data['type'] != 2)
@@ -192,10 +194,14 @@ class DeductionController extends Controller
                 break;
         }
 
+        
+        if(array_key_exists('half', $data)) $data['amount'] /= 2;
+
         $payroll_code = $data['payroll_code'];
         $employee_id = $data['employee_id'];
-        unset($data['payroll_code']);
-        unset($data['employee_id']);
+        $data['payroll_id'] = Payroll::where(['payroll_code' => $payroll_code, 'employee_id' => $employee_id])->first()->id;
+        $removeData = array('payroll_code', 'employee_id', 'half');
+        $data = $this->filterData($removeData, $data);
 
         return array(
             'deductionData' => $data,

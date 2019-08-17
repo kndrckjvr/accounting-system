@@ -56,8 +56,8 @@ class AllowanceController extends Controller
     {
         $data = $this->validateRequest();
         // dd($data);
+        
         $allowance = Allowance::create($data['allowanceData']);
-        Payroll::where(['payroll_code' => $data['payroll_code'], 'employee_id' => $data['employee_id']])->firstOrFail()->allowances()->attach($allowance);
         return redirect('/allowance/'.$data['payroll_code'] .'/'.$data['employee_id'] )->with('alert', $data['allowanceData']['name'] . ' has been added.');
     }
 
@@ -80,7 +80,7 @@ class AllowanceController extends Controller
      */
     public function edit(Allowance $allowance)
     {
-        $payslip = $allowance->payrolls[0];
+        $payslip = $allowance->payroll;
         return view('allowance.edit', compact('allowance' ,'payslip'));
     }
 
@@ -107,9 +107,11 @@ class AllowanceController extends Controller
      * @param  \App\Allowance  $allowance
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Allowance $allowance)
+    public function destroy(Allowance $allowance, $payroll_code, $employee_id)
     {
-        //
+        $allowance->delete();
+
+        return redirect('/allowance/' . $payroll_code . '/' . $employee_id)->with('alert', $allowance->name . ' has been deleted.');
     }
 
     public function validateRequest() {
@@ -127,8 +129,10 @@ class AllowanceController extends Controller
 
         $payroll_code = $data['payroll_code'];
         $employee_id = $data['employee_id'];
-        unset($data['payroll_code']);
-        unset($data['employee_id']);
+        $data['payroll_id'] = Payroll::where(['payroll_code' => $payroll_code, 'employee_id' => $employee_id])->first()->id;
+        
+        $removeData = array('payroll_code', 'employee_id');
+        $data = $this->filterData($removeData, $data);
 
         return array(
             'allowanceData' => $data,

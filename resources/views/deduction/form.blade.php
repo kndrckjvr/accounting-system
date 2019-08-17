@@ -18,7 +18,7 @@
 </div>
 <div class="form-group">
     <label for="type">Deduction Type</label>
-    <select name="type" id="type" class="form-control{{ ($errors->has('amount')) ? ' is-invalid' : '' }}">
+    <select name="type" id="type" class="form-control{{ ($errors->has('type')) ? ' is-invalid' : '' }}">
         @foreach($deduction->getTypes() as $key => $value)
             <option value="{{$key}}"{{ $deduction->type == $value ? ' selected' : '' }}>{{$value}}</option>
         @endforeach
@@ -28,6 +28,10 @@
         {{$errors->first('type')}}
     </span>
     @endif
+</div>
+<div class="form-group form-check">
+    <input type="checkbox" name="half" id="half" class="form-check-input" value="true">
+    <label class="form-check-label" for="half">Semi-Monthly?</label>
 </div>
 <input type="hidden" name="payroll_code" value="{{$payslip->payroll_code}}">
 <input type="hidden" name="employee_id" value="{{$payslip->employee->id}}">

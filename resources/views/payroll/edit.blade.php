@@ -14,7 +14,7 @@
             @endslot
             @slot('body')
                 <div class="table-responsive">
-                    <table id="table_id" class="table table-bordered">
+                    <table id="payslip-table" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th style="width: 12%">Employee ID</th>
@@ -50,4 +50,9 @@
         @endcard
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('#payslip-table').DataTable();
+    });
+</script>
 @endsection

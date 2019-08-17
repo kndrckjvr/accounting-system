@@ -13,9 +13,9 @@ class Deduction extends Model
         ]
     ];
     
-    public function payrolls()
+    public function payroll()
     {
-        return $this->belongsToMany(Payroll::class);
+        return $this->belongsTo(Payroll::class);
     }
 
     
